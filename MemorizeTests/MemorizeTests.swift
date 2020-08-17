@@ -1,11 +1,3 @@
-//
-//  MemorizeTests.swift
-//  MemorizeTests
-//
-//  Created by Axel Collard Bovy on 17/08/2020.
-//  Copyright © 2020 Axel Collard Bovy. All rights reserved.
-//
-
 import XCTest
 @testable import Memorize
 

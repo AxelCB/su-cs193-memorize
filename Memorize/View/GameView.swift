@@ -14,8 +14,8 @@ struct GameView: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct GameView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        GameView()
     }
 }

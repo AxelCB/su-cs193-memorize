@@ -16,7 +16,6 @@ struct MemoryGame<CardContent: Equatable> {
         // TODO: implement logic of choosing a card
     }
     
-    
     struct Card: Identifiable {
         var isFaceUp = false
         var isMatched = false

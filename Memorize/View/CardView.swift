@@ -21,6 +21,7 @@ struct CardView: View {
                 }
             }
         }
+        .aspectRatio(aspectRatio, contentMode: .fit)
         .font(Font.system(size: fontSize(for: size)))
     }
     
@@ -28,6 +29,7 @@ struct CardView: View {
     
     private let cornerRadius: CGFloat = 20.0
     private let edgeLineWidth: CGFloat = 3.0
+    private let aspectRatio: CGFloat = 2.0/3.0
     
     private func fontSize(for size: CGSize) -> CGFloat {
         min(size.width, size.height) * 0.6

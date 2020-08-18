@@ -12,8 +12,10 @@ struct MemoryGame<CardContent: Equatable> {
         }
     }
     
-    mutating func choose(card: Card) {
-        // TODO: implement logic of choosing a card
+    mutating func choose(card chosenCard: Card) {
+        if let chosenCardIndex = cards.firstIndex(matching: chosenCard), !cards[chosenCardIndex].isFaceUp, !cards[chosenCardIndex].isMatched {
+            cards[chosenCardIndex].isFaceUp = true
+        }
     }
     
     struct Card: Identifiable {

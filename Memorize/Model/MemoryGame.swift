@@ -10,6 +10,7 @@ struct MemoryGame<CardContent: Equatable> {
             cards.append(Card(content: content, id: pairIndex * 2))
             cards.append(Card(content: content, id: pairIndex * 2 + 1))
         }
+        cards = cards.shuffled()
     }
     
     mutating func choose(card chosenCard: Card) {

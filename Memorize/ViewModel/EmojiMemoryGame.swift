@@ -5,8 +5,9 @@ class EmojiMemoryGame: ObservableObject {
     
     static func createMemoryGame() -> MemoryGame<String> {
         let emojis = ["🐶", "🐱", "🐰", "🦁", "🐨", "🐼", "🐵", "🐞", "🐙", "🦕", "🐬", "🕷", "🦋", "🦀"]
+        let shuffledEmojis = emojis.shuffled()
         return MemoryGame<String>(pairsOfCards: Int.random(in: 2...5)) { pairIndex in
-            emojis[pairIndex]
+            shuffledEmojis[pairIndex]
         }
     }
     

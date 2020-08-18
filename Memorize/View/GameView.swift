@@ -9,13 +9,21 @@
 import SwiftUI
 
 struct GameView: View {
+    var emojiMemoryGame: EmojiMemoryGame
+    
     var body: some View {
-        Text("Hello, World!")
+        HStack {
+            ForEach(emojiMemoryGame.cards) { card in
+                CardView(card: card).onTapGesture {
+                    self.emojiMemoryGame.choose(card: card)
+                }
+            }
+        }
     }
 }
 
 struct GameView_Previews: PreviewProvider {
     static var previews: some View {
-        GameView()
+        GameView(emojiMemoryGame: EmojiMemoryGame())
     }
 }

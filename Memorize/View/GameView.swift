@@ -18,7 +18,7 @@ struct GameView: View {
                     self.emojiMemoryGame.choose(card: card)
                 }
             }
-        }
+        }.padding(5)
     }
 }
 

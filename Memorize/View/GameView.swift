@@ -4,13 +4,14 @@ struct GameView: View {
     @ObservedObject var emojiMemoryGame: EmojiMemoryGame
     
     var body: some View {
-        HStack {
-            ForEach(emojiMemoryGame.cards) { card in
-                CardView(card: card).onTapGesture {
-                    self.emojiMemoryGame.choose(card: card)
-                }
+        GridView(emojiMemoryGame.cards) { card in
+            CardView(card: card).onTapGesture {
+                self.emojiMemoryGame.choose(card: card)
             }
-        }.padding(5)
+                .padding(5)
+        }
+            .font(Font.largeTitle)
+            .background(Color.black)
     }
 }
 

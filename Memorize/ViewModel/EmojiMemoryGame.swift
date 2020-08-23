@@ -42,6 +42,11 @@ class EmojiMemoryGame: ObservableObject {
         memoryGame.choose(card: card)
     }
     
+    func reset() {
+        theme = Theme.allCases.randomElement() ?? .animals
+        memoryGame = EmojiMemoryGame.createMemoryGame(theme: theme)
+    }
+    
     // MARK: - Theme
     
     enum Theme: CaseIterable {

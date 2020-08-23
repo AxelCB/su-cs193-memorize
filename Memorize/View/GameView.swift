@@ -5,13 +5,13 @@ struct GameView: View {
     
     var body: some View {
         GridView(emojiMemoryGame.cards) { card in
-            CardView(card: card).onTapGesture {
+            CardView(card: card, facingUpBackgroundColor: self.emojiMemoryGame.facingUpCardBackgroundColor, facingDownBackgroundColor: self.emojiMemoryGame.facingDownCardBackgroundColor).onTapGesture {
                 self.emojiMemoryGame.choose(card: card)
             }
                 .padding(5)
         }
             .font(Font.largeTitle)
-            .background(Color.black)
+            .background(emojiMemoryGame.boardBackgroundColor)
     }
 }
 

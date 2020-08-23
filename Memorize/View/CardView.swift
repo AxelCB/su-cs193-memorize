@@ -2,6 +2,8 @@ import SwiftUI
 
 struct CardView: View {
     let card: MemoryGame<String>.Card
+    let facingUpBackgroundColor: Color
+    let facingDownBackgroundColor: Color
     
     var body: some View {
          GeometryReader { geometry in
@@ -12,17 +14,23 @@ struct CardView: View {
     private func body(for size: CGSize) -> some View {
         ZStack {
             if card.isFaceUp {
-                RoundedRectangle(cornerRadius: cornerRadius).fill(Color.white)
+                RoundedRectangle(cornerRadius: cornerRadius).fill(facingUpBackgroundColor)
                 RoundedRectangle(cornerRadius: cornerRadius).stroke(lineWidth: edgeLineWidth)
                 Text(card.content)
             } else {
                 if !card.isMatched {
-                    RoundedRectangle(cornerRadius: cornerRadius).fill(Color.green)
+                    RoundedRectangle(cornerRadius: cornerRadius).fill(facingDownBackgroundColor)
                 }
             }
         }
         .aspectRatio(aspectRatio, contentMode: .fit)
         .font(Font.system(size: fontSize(for: size)))
+    }
+    
+    init(card: MemoryGame<String>.Card, facingUpBackgroundColor: Color = Color.white, facingDownBackgroundColor: Color = Color.green) {
+        self.card = card
+        self.facingUpBackgroundColor = facingUpBackgroundColor
+        self.facingDownBackgroundColor = facingDownBackgroundColor
     }
     
     // MARK: - Drawing Constants

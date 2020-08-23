@@ -49,106 +49,48 @@ class EmojiMemoryGame: ObservableObject {
     
     // MARK: - Theme
     
-    enum Theme: CaseIterable {
-        case animals
-        case sports
-        case weather
-        case food
-        case arts
-        case flags
-        case fruitsAndVegetables
-        case faces
+    struct Theme: CaseIterable {
+        let emojis: [String]
+        let pairsOfCards: Int
+        let facingDownCardBackgroundColor: Color
+        let facingUpCardBackgroundColor: Color
+        let boardBackgroundColor: Color
         
-        var emojis: [String] {
-            switch self {
-            case .animals:
-                return ["🐶", "🐱", "🐰", "🦁", "🐨", "🐼", "🐵", "🐞", "🐙", "🦕", "🐬", "🕷", "🦋", "🦀"]
-            case .sports:
-                return ["🏓", "🎱", "🥏", "🏐", "🎾", "⚾️", "🏈", "🏀", "⚽️", "🏸", "🏒", "🏹", "🛹", "⛷", "🏂", "🏄🏻‍♂️", "🏊🏻‍♀️", "🧗🏻‍♂️", "🚵🏻‍♂️"]
-            case .weather:
-                return ["☀️", "⛅️", "☁️", "🌧", "⛈", "❄️", "🌪", "🌈", "🌞", "🌛", "☃️", "☔️"]
-            case .food:
-                return ["🥐", "🧀", "🥨", "🍞", "🥓", "🍗", "🥩", "🌭", "🍔", "🍟", "🍕", "🥪", "🥙", "🌮", "🥗", "🥘"]
-            case .arts:
-                return ["🎭", "🎨", "🎬", "🎤", "🎧", "🎼", "🎹", "🥁", "🎷", "🎺", "🎸", "🎻"]
-            case .flags:
-                return ["🇦🇫", "🇦🇽", "🇦🇱", "🇩🇿", "🇦🇸", "🇦🇩", "🇦🇴", "🇦🇮", "🇦🇶", "🇦🇬", "🇦🇷", "🇦🇲", "🇦🇼", "🇦🇺", "🇦🇹", "🇦🇿", "🇧🇸", "🇧🇭", "🇧🇩", "🇧🇧", "🇧🇾", "🇧🇪", "🇧🇿", "🇧🇯", "🇧🇲", "🇧🇹", "🇧🇴", "🇧🇦", "🇧🇼", "🇧🇷", "🇮🇴", "🇻🇬", "🇧🇳", "🇧🇬", "🇧🇫", "🇧🇮", "🇰🇭", "🇨🇲", "🇨🇦", "🇮🇨", "🇨🇻", "🇧🇶", "🇰🇾", "🇨🇫", "🇹🇩", "🇨🇱", "🇨🇳", "🇨🇽", "🇨🇨"]
-            case .fruitsAndVegetables:
-                return ["🥕", "🌽", "🍅", "🍆", "🥑", "🥦", "🥬", "🥝", "🥥", "🌶", "🍍", "🥭", "🍑", "🍒", "🍈", "🍓", "🍇", "🍉", "🍏", "🍎", "🍐", "🍊", "🍋", "🍌"]
-            default:
-                return ["🚗", "🚕", "🚙", "🚌", "🚎" , "🏎", "🚓", "🚑", "🚒", "🚐", "🚚", "🚛", "🚜"]
-            }
+        private init(emojis: [String], pairsOfCards: Int? = nil, facingDownCardBackgroundColor: Color = Color(#colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)) , facingUpCardBackgroundColor: Color = Color.gray, boardBackgroundColor: Color = Color.white) {
+            self.emojis = emojis
+            self.pairsOfCards = pairsOfCards ?? Int.random(in: 3...MemorizeConstants.ViewModel.maximumPairsOfCards)
+            self.facingDownCardBackgroundColor = facingDownCardBackgroundColor
+            self.facingUpCardBackgroundColor = facingUpCardBackgroundColor
+            self.boardBackgroundColor = boardBackgroundColor
         }
         
-        var pairsOfCards: Int {
-            switch self {
-            case .animals, .sports, .food, .flags:
-                return Int.random(in: 3...MemorizeConstants.ViewModel.maximumPairsOfCards)
-            default:
-                return 5
-            }
-        }
+        // MARK: - Predefined Themes
+        static let animals = Theme(emojis: ["🐶", "🐱", "🐰", "🦁", "🐨", "🐼", "🐵", "🐞", "🐙", "🦕", "🐬", "🕷", "🦋", "🦀"], facingDownCardBackgroundColor: Color(#colorLiteral(red: 0, green: 0.3091007502, blue: 0.355339668, alpha: 1)), facingUpCardBackgroundColor: Color(#colorLiteral(red: 0.7464684775, green: 0.7464684775, blue: 0.7464684775, alpha: 1)))
+        static let sports = Theme(emojis: ["🏓", "🎱", "🥏", "🏐", "🎾", "⚾️", "🏈", "🏀", "⚽️", "🏸", "🏒", "🏹", "🛹", "⛷", "🏂", "🏄🏻‍♂️", "🏊🏻‍♀️", "🧗🏻‍♂️", "🚵🏻‍♂️"], facingDownCardBackgroundColor: Color(#colorLiteral(red: 0.862745098, green: 0.3333333333, blue: 0.2235294118, alpha: 1)), facingUpCardBackgroundColor: Color(#colorLiteral(red: 0.1577261992, green: 0.1577261992, blue: 0.1577261992, alpha: 1)))
+        static let weather = Theme(emojis: ["☀️", "⛅️", "☁️", "🌧", "⛈", "❄️", "🌪", "🌈", "🌞", "🌛", "☃️", "☔️"], pairsOfCards: 5, facingDownCardBackgroundColor: Color(#colorLiteral(red: 0.1315022111, green: 0.08890939504, blue: 0.506097436, alpha: 1)), facingUpCardBackgroundColor: Color(#colorLiteral(red: 0.03165959939, green: 0.03167161718, blue: 0.03165801242, alpha: 1)))
+        static let food = Theme(emojis: ["🥐", "🧀", "🥨", "🍞", "🥓", "🍗", "🥩", "🌭", "🍔", "🍟", "🍕", "🥪", "🥙", "🌮", "🥗", "🥘"], facingDownCardBackgroundColor: Color(#colorLiteral(red: 0.347515647, green: 0.01629785276, blue: 0.5989394077, alpha: 1)), facingUpCardBackgroundColor: Color(#colorLiteral(red: 0.1945320985, green: 0.5961754724, blue: 0.9507630814, alpha: 1)))
+        static let arts = Theme(emojis: ["🎭", "🎨", "🎬", "🎤", "🎧", "🎼", "🎹", "🥁", "🎷", "🎺", "🎸", "🎻"], pairsOfCards: 5, facingDownCardBackgroundColor: Color(#colorLiteral(red: 0.8413994368, green: 0, blue: 0.5007284254, alpha: 1)), facingUpCardBackgroundColor: Color(#colorLiteral(red: 0.08369358629, green: 0.720156908, blue: 0.7133956552, alpha: 1)))
+        static let flags = Theme(emojis: ["🇦🇫", "🇦🇽", "🇦🇱", "🇩🇿", "🇦🇸", "🇦🇩", "🇦🇴", "🇦🇮", "🇦🇶", "🇦🇬", "🇦🇷", "🇦🇲", "🇦🇼", "🇦🇺", "🇦🇹", "🇦🇿", "🇧🇸", "🇧🇭", "🇧🇩", "🇧🇧", "🇧🇾", "🇧🇪", "🇧🇿", "🇧🇯", "🇧🇲", "🇧🇹", "🇧🇴", "🇧🇦", "🇧🇼", "🇧🇷", "🇮🇴", "🇻🇬", "🇧🇳", "🇧🇬", "🇧🇫", "🇧🇮", "🇰🇭", "🇨🇲", "🇨🇦", "🇮🇨", "🇨🇻", "🇧🇶", "🇰🇾", "🇨🇫", "🇹🇩", "🇨🇱", "🇨🇳", "🇨🇽", "🇨🇨"], facingDownCardBackgroundColor: Color(#colorLiteral(red: 0.835042417, green: 0.7542561889, blue: 0.6254884601, alpha: 1)), facingUpCardBackgroundColor: Color(#colorLiteral(red: 0.5957826126, green: 0.5957826126, blue: 0.5957826126, alpha: 1)))
+        static let fruitsAndVegetables = Theme(emojis: ["🥕", "🌽", "🍅", "🍆", "🥑", "🥦", "🥬", "🥝", "🥥", "🌶", "🍍", "🥭", "🍑", "🍒", "🍈", "🍓", "🍇", "🍉", "🍏", "🍎", "🍐", "🍊", "🍋", "🍌"], pairsOfCards: 5, facingDownCardBackgroundColor: Color(#colorLiteral(red: 0.6618269898, green: 0.8815974746, blue: 0, alpha: 1)), facingUpCardBackgroundColor: Color(#colorLiteral(red: 0.3980560555, green: 0.5, blue: 0.003100888542, alpha: 1)))
         
-        var facingDownCardBackgroundColor: Color {
-            switch self {
-            case .animals:
-                return Color(#colorLiteral(red: 0, green: 0.3091007502, blue: 0.355339668, alpha: 1))
-            case .sports:
-                return Color(#colorLiteral(red: 0.862745098, green: 0.3333333333, blue: 0.2235294118, alpha: 1))
-            case .weather:
-                return Color(#colorLiteral(red: 0.1315022111, green: 0.08890939504, blue: 0.506097436, alpha: 1))
-            case .food:
-                return Color(#colorLiteral(red: 0.347515647, green: 0.01629785276, blue: 0.5989394077, alpha: 1))
-            case .arts:
-                return Color(#colorLiteral(red: 0.8413994368, green: 0, blue: 0.5007284254, alpha: 1))
-            case .flags:
-                return Color(#colorLiteral(red: 0.835042417, green: 0.7542561889, blue: 0.6254884601, alpha: 1))
-            case .fruitsAndVegetables:
-                return Color(#colorLiteral(red: 0.6618269898, green: 0.8815974746, blue: 0, alpha: 1))
-            default:
-                return Color(#colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1))
-            }
-        }
         
-        var facingUpCardBackgroundColor: Color {
-            switch self {
-            case .animals:
-                return Color(#colorLiteral(red: 0.7464684775, green: 0.7464684775, blue: 0.7464684775, alpha: 1))
-            case .sports:
-                return Color(#colorLiteral(red: 0.1577261992, green: 0.1577261992, blue: 0.1577261992, alpha: 1))
-            case .weather:
-                return Color(#colorLiteral(red: 0.03165959939, green: 0.03167161718, blue: 0.03165801242, alpha: 1))
-            case .food:
-                return Color(#colorLiteral(red: 0.1945320985, green: 0.5961754724, blue: 0.9507630814, alpha: 1))
-            case .arts:
-                return Color(#colorLiteral(red: 0.08369358629, green: 0.720156908, blue: 0.7133956552, alpha: 1))
-            case .flags:
-                return Color(#colorLiteral(red: 0.5957826126, green: 0.5957826126, blue: 0.5957826126, alpha: 1))
-            case .fruitsAndVegetables:
-                return Color(#colorLiteral(red: 0.3980560555, green: 0.5, blue: 0.003100888542, alpha: 1))
-            default:
-                return Color.gray
-            }
-        }
+        // MARK: - CaseIterable
         
-        var boardBackgroundColor: Color {
-            switch self {
-            case .animals:
-                return Color.white
-            case .sports:
-                return Color.white
-            case .weather:
-                return Color.white
-            case .food:
-                return Color.white
-            case .arts:
-                return Color.white
-            case .flags:
-                return Color.white
-            case .fruitsAndVegetables:
-                return Color.white
-            default:
-                return Color.white
+        /// A type that can represent a collection of all values of this type.
+        typealias AllCases = Array<Theme>
+
+        /// A collection of all values of this type.
+        static var allCases: AllCases {
+            get {
+                return [
+                    .animals,
+                    .sports,
+                    .weather,
+                    .food,
+                    .arts,
+                    .flags,
+                    .fruitsAndVegetables,
+                ]
             }
         }
     }

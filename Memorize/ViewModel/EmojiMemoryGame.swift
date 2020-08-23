@@ -36,6 +36,10 @@ class EmojiMemoryGame: ObservableObject {
         theme.boardBackgroundColor
     }
     
+    var themeName: String {
+        theme.name
+    }
+    
     // MARK: - Intents
     
     func choose(card: MemoryGame<String>.Card) {
@@ -50,13 +54,15 @@ class EmojiMemoryGame: ObservableObject {
     // MARK: - Theme
     
     struct Theme: CaseIterable {
+        let name: String
         let emojis: [String]
         let pairsOfCards: Int
         let facingDownCardBackgroundColor: Color
         let facingUpCardBackgroundColor: Color
         let boardBackgroundColor: Color
         
-        private init(emojis: [String], pairsOfCards: Int? = nil, facingDownCardBackgroundColor: Color = Color(#colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)) , facingUpCardBackgroundColor: Color = Color.gray, boardBackgroundColor: Color = Color.white) {
+        private init(name: String, emojis: [String], pairsOfCards: Int? = nil, facingDownCardBackgroundColor: Color = Color(#colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)) , facingUpCardBackgroundColor: Color = Color.gray, boardBackgroundColor: Color = Color.white) {
+            self.name = name
             self.emojis = emojis
             self.pairsOfCards = pairsOfCards ?? Int.random(in: 3...MemorizeConstants.ViewModel.maximumPairsOfCards)
             self.facingDownCardBackgroundColor = facingDownCardBackgroundColor
@@ -65,13 +71,13 @@ class EmojiMemoryGame: ObservableObject {
         }
         
         // MARK: - Predefined Themes
-        static let animals = Theme(emojis: ["🐶", "🐱", "🐰", "🦁", "🐨", "🐼", "🐵", "🐞", "🐙", "🦕", "🐬", "🕷", "🦋", "🦀"], facingDownCardBackgroundColor: Color(#colorLiteral(red: 0, green: 0.3091007502, blue: 0.355339668, alpha: 1)), facingUpCardBackgroundColor: Color(#colorLiteral(red: 0.7464684775, green: 0.7464684775, blue: 0.7464684775, alpha: 1)))
-        static let sports = Theme(emojis: ["🏓", "🎱", "🥏", "🏐", "🎾", "⚾️", "🏈", "🏀", "⚽️", "🏸", "🏒", "🏹", "🛹", "⛷", "🏂", "🏄🏻‍♂️", "🏊🏻‍♀️", "🧗🏻‍♂️", "🚵🏻‍♂️"], facingDownCardBackgroundColor: Color(#colorLiteral(red: 0.862745098, green: 0.3333333333, blue: 0.2235294118, alpha: 1)), facingUpCardBackgroundColor: Color(#colorLiteral(red: 0.1577261992, green: 0.1577261992, blue: 0.1577261992, alpha: 1)))
-        static let weather = Theme(emojis: ["☀️", "⛅️", "☁️", "🌧", "⛈", "❄️", "🌪", "🌈", "🌞", "🌛", "☃️", "☔️"], pairsOfCards: 5, facingDownCardBackgroundColor: Color(#colorLiteral(red: 0.1315022111, green: 0.08890939504, blue: 0.506097436, alpha: 1)), facingUpCardBackgroundColor: Color(#colorLiteral(red: 0.03165959939, green: 0.03167161718, blue: 0.03165801242, alpha: 1)))
-        static let food = Theme(emojis: ["🥐", "🧀", "🥨", "🍞", "🥓", "🍗", "🥩", "🌭", "🍔", "🍟", "🍕", "🥪", "🥙", "🌮", "🥗", "🥘"], facingDownCardBackgroundColor: Color(#colorLiteral(red: 0.347515647, green: 0.01629785276, blue: 0.5989394077, alpha: 1)), facingUpCardBackgroundColor: Color(#colorLiteral(red: 0.1945320985, green: 0.5961754724, blue: 0.9507630814, alpha: 1)))
-        static let arts = Theme(emojis: ["🎭", "🎨", "🎬", "🎤", "🎧", "🎼", "🎹", "🥁", "🎷", "🎺", "🎸", "🎻"], pairsOfCards: 5, facingDownCardBackgroundColor: Color(#colorLiteral(red: 0.8413994368, green: 0, blue: 0.5007284254, alpha: 1)), facingUpCardBackgroundColor: Color(#colorLiteral(red: 0.08369358629, green: 0.720156908, blue: 0.7133956552, alpha: 1)))
-        static let flags = Theme(emojis: ["🇦🇫", "🇦🇽", "🇦🇱", "🇩🇿", "🇦🇸", "🇦🇩", "🇦🇴", "🇦🇮", "🇦🇶", "🇦🇬", "🇦🇷", "🇦🇲", "🇦🇼", "🇦🇺", "🇦🇹", "🇦🇿", "🇧🇸", "🇧🇭", "🇧🇩", "🇧🇧", "🇧🇾", "🇧🇪", "🇧🇿", "🇧🇯", "🇧🇲", "🇧🇹", "🇧🇴", "🇧🇦", "🇧🇼", "🇧🇷", "🇮🇴", "🇻🇬", "🇧🇳", "🇧🇬", "🇧🇫", "🇧🇮", "🇰🇭", "🇨🇲", "🇨🇦", "🇮🇨", "🇨🇻", "🇧🇶", "🇰🇾", "🇨🇫", "🇹🇩", "🇨🇱", "🇨🇳", "🇨🇽", "🇨🇨"], facingDownCardBackgroundColor: Color(#colorLiteral(red: 0.835042417, green: 0.7542561889, blue: 0.6254884601, alpha: 1)), facingUpCardBackgroundColor: Color(#colorLiteral(red: 0.5957826126, green: 0.5957826126, blue: 0.5957826126, alpha: 1)))
-        static let fruitsAndVegetables = Theme(emojis: ["🥕", "🌽", "🍅", "🍆", "🥑", "🥦", "🥬", "🥝", "🥥", "🌶", "🍍", "🥭", "🍑", "🍒", "🍈", "🍓", "🍇", "🍉", "🍏", "🍎", "🍐", "🍊", "🍋", "🍌"], pairsOfCards: 5, facingDownCardBackgroundColor: Color(#colorLiteral(red: 0.6618269898, green: 0.8815974746, blue: 0, alpha: 1)), facingUpCardBackgroundColor: Color(#colorLiteral(red: 0.3980560555, green: 0.5, blue: 0.003100888542, alpha: 1)))
+        static let animals = Theme(name: "Animals", emojis: ["🐶", "🐱", "🐰", "🦁", "🐨", "🐼", "🐵", "🐞", "🐙", "🦕", "🐬", "🕷", "🦋", "🦀"], facingDownCardBackgroundColor: Color(#colorLiteral(red: 0, green: 0.3091007502, blue: 0.355339668, alpha: 1)), facingUpCardBackgroundColor: Color(#colorLiteral(red: 0.7464684775, green: 0.7464684775, blue: 0.7464684775, alpha: 1)))
+        static let sports = Theme(name: "Sports", emojis: ["🏓", "🎱", "🥏", "🏐", "🎾", "⚾️", "🏈", "🏀", "⚽️", "🏸", "🏒", "🏹", "🛹", "⛷", "🏂", "🏄🏻‍♂️", "🏊🏻‍♀️", "🧗🏻‍♂️", "🚵🏻‍♂️"], facingDownCardBackgroundColor: Color(#colorLiteral(red: 0.862745098, green: 0.3333333333, blue: 0.2235294118, alpha: 1)), facingUpCardBackgroundColor: Color(#colorLiteral(red: 0.1577261992, green: 0.1577261992, blue: 0.1577261992, alpha: 1)))
+        static let weather = Theme(name: "Weather", emojis: ["☀️", "⛅️", "☁️", "🌧", "⛈", "❄️", "🌪", "🌈", "🌞", "🌛", "☃️", "☔️"], pairsOfCards: 5, facingDownCardBackgroundColor: Color(#colorLiteral(red: 0.1315022111, green: 0.08890939504, blue: 0.506097436, alpha: 1)), facingUpCardBackgroundColor: Color(#colorLiteral(red: 0.03165959939, green: 0.03167161718, blue: 0.03165801242, alpha: 1)))
+        static let food = Theme(name: "Food", emojis: ["🥐", "🧀", "🥨", "🍞", "🥓", "🍗", "🥩", "🌭", "🍔", "🍟", "🍕", "🥪", "🥙", "🌮", "🥗", "🥘"], facingDownCardBackgroundColor: Color(#colorLiteral(red: 0.347515647, green: 0.01629785276, blue: 0.5989394077, alpha: 1)), facingUpCardBackgroundColor: Color(#colorLiteral(red: 0.1945320985, green: 0.5961754724, blue: 0.9507630814, alpha: 1)))
+        static let arts = Theme(name: "Arts", emojis: ["🎭", "🎨", "🎬", "🎤", "🎧", "🎼", "🎹", "🥁", "🎷", "🎺", "🎸", "🎻"], pairsOfCards: 5, facingDownCardBackgroundColor: Color(#colorLiteral(red: 0.8413994368, green: 0, blue: 0.5007284254, alpha: 1)), facingUpCardBackgroundColor: Color(#colorLiteral(red: 0.08369358629, green: 0.720156908, blue: 0.7133956552, alpha: 1)))
+        static let flags = Theme(name: "Flags", emojis: ["🇦🇫", "🇦🇽", "🇦🇱", "🇩🇿", "🇦🇸", "🇦🇩", "🇦🇴", "🇦🇮", "🇦🇶", "🇦🇬", "🇦🇷", "🇦🇲", "🇦🇼", "🇦🇺", "🇦🇹", "🇦🇿", "🇧🇸", "🇧🇭", "🇧🇩", "🇧🇧", "🇧🇾", "🇧🇪", "🇧🇿", "🇧🇯", "🇧🇲", "🇧🇹", "🇧🇴", "🇧🇦", "🇧🇼", "🇧🇷", "🇮🇴", "🇻🇬", "🇧🇳", "🇧🇬", "🇧🇫", "🇧🇮", "🇰🇭", "🇨🇲", "🇨🇦", "🇮🇨", "🇨🇻", "🇧🇶", "🇰🇾", "🇨🇫", "🇹🇩", "🇨🇱", "🇨🇳", "🇨🇽", "🇨🇨"], facingDownCardBackgroundColor: Color(#colorLiteral(red: 0.835042417, green: 0.7542561889, blue: 0.6254884601, alpha: 1)), facingUpCardBackgroundColor: Color(#colorLiteral(red: 0.5957826126, green: 0.5957826126, blue: 0.5957826126, alpha: 1)))
+        static let fruitsAndVegetables = Theme(name: "Fruits and Vegetables", emojis: ["🥕", "🌽", "🍅", "🍆", "🥑", "🥦", "🥬", "🥝", "🥥", "🌶", "🍍", "🥭", "🍑", "🍒", "🍈", "🍓", "🍇", "🍉", "🍏", "🍎", "🍐", "🍊", "🍋", "🍌"], pairsOfCards: 5, facingDownCardBackgroundColor: Color(#colorLiteral(red: 0.6618269898, green: 0.8815974746, blue: 0, alpha: 1)), facingUpCardBackgroundColor: Color(#colorLiteral(red: 0.3980560555, green: 0.5, blue: 0.003100888542, alpha: 1)))
         
         
         // MARK: - CaseIterable

@@ -22,6 +22,10 @@ class EmojiMemoryGame: ObservableObject {
         memoryGame.cards
     }
     
+    var score: Int {
+        memoryGame.score
+    }
+    
     // MARK: - Access to theme specific view values
     
     var facingDownCardBackgroundColor: Color {

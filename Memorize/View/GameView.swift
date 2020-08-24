@@ -14,6 +14,7 @@ struct GameView: View {
                 }
                     .font(Font.largeTitle)
                     .background(emojiMemoryGame.boardBackgroundColor)
+                Text("Current score: \(emojiMemoryGame.score)")
                 Button(action: {
                     self.emojiMemoryGame.reset()
                 }, label: {

@@ -3,6 +3,7 @@ import Foundation
 struct MemoryGame<CardContent: Equatable> {
     private(set) var cards: Array<Card>
     private(set) var score: Int = 0
+    private var lastCardChosenAt: Date?
     private var indexOfTheOnlyAndOnlyFaceUpCard: Int? {
         get {
             return cards.indices.filter { cards[$0].isFaceUp && !cards[$0].isMatched }.only
@@ -31,15 +32,26 @@ struct MemoryGame<CardContent: Equatable> {
                 if cards[faceUpNotMatchedCardIndex].content == cards[chosenCardIndex].content {
                     cards[chosenCardIndex].isMatched = true
                     cards[faceUpNotMatchedCardIndex].isMatched = true
-                    score += 2
+                    score += computeTimeBasedScoreBonusOrPenaltyTo(score: 4)
                 } else {
-                    score -= [cards[chosenCardIndex], cards[faceUpNotMatchedCardIndex]].filter { $0.wasSeen }.count
+                    score += computeTimeBasedScoreBonusOrPenaltyTo(score: [cards[chosenCardIndex], cards[faceUpNotMatchedCardIndex]].filter { $0.wasSeen }.count * -1)
                 }
                 cards[chosenCardIndex].isFaceUp = true
             } else {
                 indexOfTheOnlyAndOnlyFaceUpCard = chosenCardIndex
             }
+            lastCardChosenAt = Date()
         }
+    }
+    
+    private mutating func computeTimeBasedScoreBonusOrPenaltyTo(score: Int) -> Int {
+        guard let lastCardChosenAt = lastCardChosenAt else {
+            return 0
+        }
+        let secondsSinceLastChosenCard = min(Date().timeIntervalSince(lastCardChosenAt), 10)
+        // Math function may be a bit complicated because of type conversions, but equivalent math function would be
+        // scoreDiffence = ( (-a) * x^2 + 50 only if a was positive) * a ; where x = secondsSinceLastChosenCard , a = score
+        return Int(round(Double(-score) * secondsSinceLastChosenCard.magnitudeSquared) + ((score > 0) ? 50 : 0)) * score
     }
     
     struct Card: Identifiable {

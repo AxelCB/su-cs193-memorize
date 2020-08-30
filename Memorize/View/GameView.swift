@@ -14,14 +14,15 @@ struct GameView: View {
                 }
                     .font(Font.largeTitle)
                     .background(emojiMemoryGame.boardBackgroundColor)
-                Text("Current score: \(emojiMemoryGame.score)")
+                Text("currentScore") + Text("\(emojiMemoryGame.score)").bold()
                 Button(action: {
                     self.emojiMemoryGame.reset()
                 }, label: {
-                    Text("New Game")
+                    Text("newGame")
                 })
             }
-            .navigationBarTitle("Memorize - \(emojiMemoryGame.themeName)", displayMode: .inline)
+                .padding(.bottom, 10)
+                .navigationBarTitle("Memorize - \(emojiMemoryGame.themeName)", displayMode: .inline)
         }
     }
 }

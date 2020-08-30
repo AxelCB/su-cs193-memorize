@@ -1,0 +1,18 @@
+/* Animal based theme name */
+"animalsThemeName" = "Animales";
+/* Art based theme name */
+"artThemeName" = "Artes";
+/* Flag based theme name */
+"flagThemeName" = "Banderas";
+/* Food based theme name */
+"foodThemeName" = "Comida";
+/* Fruits and vegetables based theme name */
+"fruitVegetableThemeName" = "Frutas y Vegetales";
+/* Sport based theme name */
+"sportsThemeName" = "Deportes";
+/* Weather based theme name */
+"weatherThemeName" = "Clima";
+/* Start a new game */
+"newGame" = "Nueva Partida";
+/* Current score */
+"currentScore" = "Puntaje actual: ";
